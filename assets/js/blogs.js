@@ -6,12 +6,15 @@
   }
 
   async function getBlogPosts(){
-    const today = new Date();
-    let blogPostText;
+    let blogDate = moment("2018-05-10");
+    const today = moment();
 
-    blogPostText = fetchBlogPost(10052018);
-    console.log(blogPostText);
-    debugger;
+    while(blogDate.isSameOrBefore(today)) {
+      let blogPostText;
+      blogPostText = await fetchBlogPost(blogDate.format('YYYY-MM-DD')); 
+      console.log(blogPostText);
+      blogDate = blogDate.add(1, 'day');
+    }
   }
 
   getBlogPosts();
