@@ -2,7 +2,16 @@
   console.log('downloaded!');
 
   function fetchBlogPost(dateID) {
-    return fetch(`/posts/${dateID}.html`);
+    return new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.onload = function() {
+        debugger;
+        console.log(this.responseXML.title);
+      }
+      xhr.open('GET', `/posts/${dateID}.html`);
+      xhr.responseType = "document";
+      xhr.send();
+    });
   }
 
   async function getBlogPosts(){
@@ -11,7 +20,13 @@
 
     while(blogDate.isSameOrBefore(today)) {
       let blogPostText;
-      blogPostText = await fetchBlogPost(blogDate.format('YYYY-MM-DD')); 
+      console.log('before await');
+      try {
+        blogPostText = await fetchBlogPost(blogDate.format('YYYY-MM-DD')); 
+      } catch (e) {
+        blogPostText = '';
+      }
+      console.log('after await');
       console.log(blogPostText);
       blogDate = blogDate.add(1, 'day');
     }
