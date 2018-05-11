@@ -1,12 +1,18 @@
-console.log('downloaded!');
+(function() {
+  console.log('downloaded!');
 
-function fetchBlogPost(dateID) {
-  return fetch(`posts/${dateID}.html`);
-}
+  function fetchBlogPost(dateID) {
+    return fetch(`/posts/${dateID}.html`);
+  }
 
-async function getBlogPosts(){
-  let blogPostText;
+  async function getBlogPosts(){
+    const today = new Date();
+    let blogPostText;
 
-  blogPostText = fetchBlogPost(10052018);
-  console.log(blogPostText);
-}
+    blogPostText = fetchBlogPost(10052018);
+    console.log(blogPostText);
+    debugger;
+  }
+
+  getBlogPosts();
+})();
